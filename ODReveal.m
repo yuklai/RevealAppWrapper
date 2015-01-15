@@ -30,6 +30,7 @@
 
 - (void)startReveal
 {
+#if TARGET_IPHONE_SIMULATOR
     NSString *revealLibName = @"libReveal";
     NSString *revealLibExtension = @"dylib";
     NSString *dyLibPath = [[NSBundle mainBundle] pathForResource:revealLibName ofType:revealLibExtension];
@@ -47,10 +48,12 @@
         // Post a notification to signal Reveal to start the service.
         [[NSNotificationCenter defaultCenter] postNotificationName:@"IBARevealRequestStart" object:self];
     }
+#endif
 }
 
 - (void)stopReveal
 {
+#if TARGET_IPHONE_SIMULATOR
     if (_revealLib)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"IBARevealRequestStop" object:self];
@@ -65,6 +68,7 @@
             ODLog(@"Reveal library could not be unloaded: %s", error);
         }
     }
+#endif
 }
 
 @end
